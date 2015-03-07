@@ -1,18 +1,20 @@
 #include "ofxAsdfPixelSort.h"
 
-void ofxAsdfPixelSort::setup(ofImage& _img){
+void ofxAsdfPixelSort::setup(ofImage& _img, int _mode, int _blackValue, int _brightnessValue, int _whiteValue){
 	img = _img;
 	
 	width = img.getWidth();
 	height = img.getHeight();
-	mode = 1;
-	blackValue = -16000000;
-	brigthnessValue = 60;
-	whiteValue = -13000000;
-	loops  = 1;
+	mode = _mode;
+	blackValue = _blackValue;
+	brigthnessValue = _brightnessValue;
+	whiteValue = _whiteValue;
+	
+	loops = 1;
+	
 	row = 0;
 	column = 0;
-	saved = false;
+	sortDone = false;
 }
 
 //--------------------------------------------------------------
@@ -20,19 +22,16 @@ void ofxAsdfPixelSort::update(){
     if (column < img.getWidth()-1) {
         sortColumn();
         column++;
+		img.update();
     }
 	else if (row < img.getHeight()-1) {
         sortRow();
         row++;
+		img.update();
     }
-	img.update();
-	
-//	if(!saved && ofGetFrameNum() >= loops) {
-//		//ofSaveScreen(imgFileName+"_"+ofToString(mode)+".png");
-//		img.saveImage(ofToDataPath("mod.png"));
-//		saved = true;
-//		ofLogVerbose() << "DONE" << ofGetFrameNum();
-//	}
+	else {
+		sortDone = true;
+	}
 }
 
 //--------------------------------------------------------------

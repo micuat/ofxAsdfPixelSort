@@ -9,7 +9,11 @@ class ofxAsdfPixelSort {
 	};
 	
 public:
-	void setup(ofImage&);
+	void setup(ofImage& _img,
+			   int _mode = 1,
+			   int _blackValue = -16000000,
+			   int _brightnessValue = 60,
+			   int _whiteValue = -13000000);
 	void update();
 	void draw();
 	
@@ -21,6 +25,9 @@ public:
 	int getNextDark(Direction d, int _x, int _y);
 	int getFirstNotWhite(Direction d, int _x, int _y);
 	int getNextWhite(Direction d, int _x, int _y);
+	
+	bool isSortDone() { return sortDone; };
+	ofImage getImage() { return img; };
 	
 private:
 	template<typename T> inline int getPcolor(ofColor_<T> c) {
@@ -37,7 +44,7 @@ private:
     int row;
     int column;
     
-    bool saved;
+    bool sortDone;
 	
     int mode;
 	int width, height;

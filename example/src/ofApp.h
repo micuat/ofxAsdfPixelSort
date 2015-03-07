@@ -21,4 +21,5 @@ public:
 	void gotMessage(ofMessage msg);
 	
 	ofxAsdfPixelSort aps;
+	bool saved;
 };
