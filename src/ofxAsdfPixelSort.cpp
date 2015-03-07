@@ -135,7 +135,7 @@ void ofxAsdfPixelSort::sortColumn() {
 int ofxAsdfPixelSort::getFirstNotBlackX(int _x, int _y) {
 	int x = _x;
 	int y = _y;
-	while((img.getColor(x,y).getHex()|0xff000000) < blackValue) {
+	while(getPcolor(img.getColor(x,y)) < blackValue) {
 		x++;
 		if(x >= width) return -1;
 	}
@@ -145,7 +145,7 @@ int ofxAsdfPixelSort::getFirstNotBlackX(int _x, int _y) {
 int ofxAsdfPixelSort::getNextBlackX(int _x, int _y) {
 	int x = _x+1;
 	int y = _y;
-	while((img.getColor(x,y).getHex()|0xff000000) > blackValue) {
+	while(getPcolor(img.getColor(x,y)) > blackValue) {
 		x++;
 		if(x >= width) return width-1;
 	}
@@ -176,7 +176,7 @@ int ofxAsdfPixelSort::getNextDarkX(int _x, int _y) {
 int ofxAsdfPixelSort::getFirstNotWhiteX(int _x, int _y) {
 	int x = _x;
 	int y = _y;
-	while((img.getColor(x,y).getHex()|0xff000000) > whiteValue) {
+	while(getPcolor(img.getColor(x,y)) > whiteValue) {
 		x++;
 		if(x >= width) return -1;
 	}
@@ -186,7 +186,7 @@ int ofxAsdfPixelSort::getFirstNotWhiteX(int _x, int _y) {
 int ofxAsdfPixelSort::getNextWhiteX(int _x, int _y) {
 	int x = _x+1;
 	int y = _y;
-	while((img.getColor(x,y).getHex()|0xff000000) < whiteValue) {
+	while(getPcolor(img.getColor(x,y)) < whiteValue) {
 		x++;
 		if(x >= width) return width-1;
 	}
@@ -199,7 +199,7 @@ int ofxAsdfPixelSort::getFirstNotBlackY(int _x, int _y) {
 	int x = _x;
 	int y = _y;
 	if(y < height) {
-		while((img.getColor(x,y).getHex()|0xff000000) < blackValue) {
+		while(getPcolor(img.getColor(x,y)) < blackValue) {
 			y++;
 			if(y >= height) return -1;
 		}
@@ -211,7 +211,7 @@ int ofxAsdfPixelSort::getNextBlackY(int _x, int _y) {
 	int x = _x;
 	int y = _y+1;
 	if(y < height) {
-		while((img.getColor(x,y).getHex()|0xff000000) > blackValue) {
+		while(getPcolor(img.getColor(x,y)) > blackValue) {
 			y++;
 			if(y >= height) return height-1;
 		}
@@ -249,7 +249,7 @@ int ofxAsdfPixelSort::getFirstNotWhiteY(int _x, int _y) {
 	int x = _x;
 	int y = _y;
 	if(y < height) {
-		while((img.getColor(x,y).getHex()|0xff000000) > whiteValue) {
+		while(getPcolor(img.getColor(x,y)) > whiteValue) {
 			y++;
 			if(y >= height) return -1;
 		}
@@ -261,7 +261,7 @@ int ofxAsdfPixelSort::getNextWhiteY(int _x, int _y) {
 	int x = _x;
 	int y = _y+1;
 	if(y < height) {
-		while((img.getColor(x,y).getHex()|0xff000000) < whiteValue) {
+		while(getPcolor(img.getColor(x,y)) < whiteValue) {
 			y++;
 			if(y >= height) return height-1;
 		}

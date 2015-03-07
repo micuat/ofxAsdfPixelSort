@@ -23,6 +23,9 @@ public:
 	int getNextWhiteY(int _x, int _y);
 	
 private:
+	template<typename T> inline int getPcolor(ofColor_<T> c) {
+		return c.getHex() | 0xff000000;
+	};
 	ofImage img;
 	
     int loops;
