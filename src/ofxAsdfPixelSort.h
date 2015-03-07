@@ -3,24 +3,23 @@
 #include "ofMain.h"
 
 class ofxAsdfPixelSort {
+	enum Direction {
+		X,
+		Y
+	};
+	
 public:
 	void setup(ofImage&);
 	void draw();
 	
 	void sortColumn();
 	void sortRow();
-	int getFirstNotBlackX(int _x, int _y);
-	int getNextBlackX(int _x, int _y);
-	int getFirstBrightX(int _x, int _y);
-	int getNextDarkX(int _x, int _y);
-	int getFirstNotWhiteX(int _x, int _y);
-	int getNextWhiteX(int _x, int _y);
-	int getFirstNotBlackY(int _x, int _y);
-	int getNextBlackY(int _x, int _y);
-	int getFirstBrightY(int _x, int _y);
-	int getNextDarkY(int _x, int _y);
-	int getFirstNotWhiteY(int _x, int _y);
-	int getNextWhiteY(int _x, int _y);
+	int getFirstNotBlack(Direction d, int _x, int _y);
+	int getNextBlack(Direction d, int _x, int _y);
+	int getFirstBright(Direction d, int _x, int _y);
+	int getNextDark(Direction d, int _x, int _y);
+	int getFirstNotWhite(Direction d, int _x, int _y);
+	int getNextWhite(Direction d, int _x, int _y);
 	
 private:
 	template<typename T> inline int getPcolor(ofColor_<T> c) {

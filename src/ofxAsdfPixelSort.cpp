@@ -20,14 +20,12 @@ void ofxAsdfPixelSort::draw(){
     while (column < img.getWidth()-1) {
         sortColumn();
         column++;
-        img.update();
     }
 	while (row < img.getHeight()-1) {
         sortRow();
         row++;
-		img.update();
-		
     }
+	img.update();
 	
 	img.draw(0,0);
 	if(!saved && ofGetFrameNum() >= loops) {
@@ -48,16 +46,16 @@ void ofxAsdfPixelSort::sortRow(){
         
         switch(mode) {
             case 0:
-                x = getFirstNotBlackX(x, y);
-                xend = getNextBlackX(x, y);
+                x = getFirstNotBlack(X, x, y);
+                xend = getNextBlack(X, x, y);
                 break;
             case 1:
-                x = getFirstBrightX(x, y);
-                xend = getNextDarkX(x, y);
+                x = getFirstBright(X, x, y);
+                xend = getNextDark(X, x, y);
                 break;
             case 2:
-                x = getFirstNotWhiteX(x, y);
-                xend = getNextWhiteX(x, y);
+                x = getFirstNotWhite(X, x, y);
+                xend = getNextWhite(X, x, y);
                 break;
             default:
                 break;
@@ -94,16 +92,16 @@ void ofxAsdfPixelSort::sortColumn() {
 	while(yend < img.getHeight()-1) {
 		switch(mode) {
 			case 0:
-				y = getFirstNotBlackY(x, y);
-				yend = getNextBlackY(x, y);
+				y = getFirstNotBlack(Y, x, y);
+				yend = getNextBlack(Y, x, y);
 				break;
 			case 1:
-				y = getFirstBrightY(x, y);
-				yend = getNextDarkY(x, y);
+				y = getFirstBright(Y, x, y);
+				yend = getNextDark(Y, x, y);
 				break;
 			case 2:
-				y = getFirstNotWhiteY(x, y);
-				yend = getNextWhiteY(x, y);
+				y = getFirstNotWhite(Y, x, y);
+				yend = getNextWhite(Y, x, y);
 				break;
 			default:
 				break;
@@ -132,139 +130,120 @@ void ofxAsdfPixelSort::sortColumn() {
 }
 
 //BLACK
-int ofxAsdfPixelSort::getFirstNotBlackX(int _x, int _y) {
+int ofxAsdfPixelSort::getFirstNotBlack(Direction d, int _x, int _y) {
 	int x = _x;
 	int y = _y;
+	
+	if(x >= width) return -1;
+	if(y >= height) return -1;
+	
 	while(getPcolor(img.getColor(x,y)) < blackValue) {
-		x++;
+		if(d == X) x++;
+		else y++;
 		if(x >= width) return -1;
+		if(y >= height) return -1;
 	}
-	return x;
+	
+	if(d == X) return x;
+	else return y;
 }
 
-int ofxAsdfPixelSort::getNextBlackX(int _x, int _y) {
-	int x = _x+1;
+int ofxAsdfPixelSort::getNextBlack(Direction d, int _x, int _y) {
+	int x = _x;
 	int y = _y;
+	
+	if(d == X) x++;
+	else y++;
+	
+	if(x >= width) return width-1;
+	if(y >= height) return height-1;
+	
 	while(getPcolor(img.getColor(x,y)) > blackValue) {
-		x++;
+		if(d == X) x++;
+		else y++;
 		if(x >= width) return width-1;
+		if(y >= height) return height-1;
 	}
-	return x-1;
+	
+	if(d == X) return x-1;
+	else return y-1;
 }
 
-int ofxAsdfPixelSort::getFirstBrightX(int _x, int _y) {
+int ofxAsdfPixelSort::getFirstBright(Direction d, int _x, int _y) {
 	int x = _x;
 	int y = _y;
+	
+	if(x >= width) return -1;
+	if(y >= height) return -1;
+	
 	while(img.getColor(x,y).getBrightness() < brigthnessValue) {
-		x++;
+		if(d == X) x++;
+		else y++;
 		if(x >= width) return -1;
+		if(y >= height) return -1;
 	}
-	return x;
+	
+	if(d == X) return x;
+	else return y;
 }
 
-int ofxAsdfPixelSort::getNextDarkX(int _x, int _y) {
-	int x = _x+1;
+int ofxAsdfPixelSort::getNextDark(Direction d, int _x, int _y) {
+	int x = _x;
 	int y = _y;
+	
+	if(d == X) x++;
+	else y++;
+	
+	if(x >= width) return width-1;
+	if(y >= height) return height-1;
+	
 	while(img.getColor(x,y).getBrightness() > brigthnessValue) {
-		x++;
+		if(d == X) x++;
+		else y++;
 		if(x >= width) return width-1;
+		if(y >= height) return height-1;
 	}
-	return x-1;
+	
+	if(d == X) return x-1;
+	else return y-1;
 }
 
 //WHITE
-int ofxAsdfPixelSort::getFirstNotWhiteX(int _x, int _y) {
+int ofxAsdfPixelSort::getFirstNotWhite(Direction d, int _x, int _y) {
 	int x = _x;
 	int y = _y;
+	
+	if(x >= width) return -1;
+	if(y >= height) return -1;
+	
 	while(getPcolor(img.getColor(x,y)) > whiteValue) {
-		x++;
+		if(d == X) x++;
+		else y++;
 		if(x >= width) return -1;
+		if(y >= height) return -1;
 	}
-	return x;
+	
+	if(d == X) return x;
+	else return y;
 }
 
-int ofxAsdfPixelSort::getNextWhiteX(int _x, int _y) {
-	int x = _x+1;
+int ofxAsdfPixelSort::getNextWhite(Direction d, int _x, int _y) {
+	int x = _x;
 	int y = _y;
+	
+	if(d == X) x++;
+	else y++;
+	
+	if(x >= width) return width-1;
+	if(y >= height) return height-1;
+	
 	while(getPcolor(img.getColor(x,y)) < whiteValue) {
-		x++;
+		if(d == X) x++;
+		else y++;
 		if(x >= width) return width-1;
+		if(y >= height) return height-1;
 	}
-	return x-1;
-}
-
-
-//BLACK
-int ofxAsdfPixelSort::getFirstNotBlackY(int _x, int _y) {
-	int x = _x;
-	int y = _y;
-	if(y < height) {
-		while(getPcolor(img.getColor(x,y)) < blackValue) {
-			y++;
-			if(y >= height) return -1;
-		}
-	}
-	return y;
-}
-
-int ofxAsdfPixelSort::getNextBlackY(int _x, int _y) {
-	int x = _x;
-	int y = _y+1;
-	if(y < height) {
-		while(getPcolor(img.getColor(x,y)) > blackValue) {
-			y++;
-			if(y >= height) return height-1;
-		}
-	}
-	return y-1;
-}
-
-//BRIGHTNESS
-int ofxAsdfPixelSort::getFirstBrightY(int _x, int _y) {
-	int x = _x;
-	int y = _y;
-	if(y < height) {
-		while(img.getColor(x,y).getBrightness() < brigthnessValue) {
-			y++;
-			if(y >= height) return -1;
-		}
-	}
-	return y;
-}
-
-int ofxAsdfPixelSort::getNextDarkY(int _x, int _y) {
-	int x = _x;
-	int y = _y+1;
-	if(y < height) {
-		while(img.getColor(x,y).getBrightness() > brigthnessValue) {
-			y++;
-			if(y >= height) return height-1;
-		}
-	}
-	return y-1;
-}
-
-//WHITE
-int ofxAsdfPixelSort::getFirstNotWhiteY(int _x, int _y) {
-	int x = _x;
-	int y = _y;
-	if(y < height) {
-		while(getPcolor(img.getColor(x,y)) > whiteValue) {
-			y++;
-			if(y >= height) return -1;
-		}
-	}
-	return y;
-}
-
-int ofxAsdfPixelSort::getNextWhiteY(int _x, int _y) {
-	int x = _x;
-	int y = _y+1;
-	if(y < height) {
-		while(getPcolor(img.getColor(x,y)) < whiteValue) {
-			y++;
-			if(y >= height) return height-1;
-		}
-	}
-	return y-1;
+	
+	if(d == X) return x-1;
+	else return y-1;
 }
