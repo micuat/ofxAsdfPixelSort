@@ -10,6 +10,7 @@ class ofxAsdfPixelSort {
 	
 public:
 	void setup(ofImage&);
+	void update();
 	void draw();
 	
 	void sortColumn();

@@ -16,24 +16,28 @@ void ofxAsdfPixelSort::setup(ofImage& _img){
 }
 
 //--------------------------------------------------------------
-void ofxAsdfPixelSort::draw(){
-    while (column < img.getWidth()-1) {
+void ofxAsdfPixelSort::update(){
+    if (column < img.getWidth()-1) {
         sortColumn();
         column++;
     }
-	while (row < img.getHeight()-1) {
+	else if (row < img.getHeight()-1) {
         sortRow();
         row++;
     }
 	img.update();
 	
+//	if(!saved && ofGetFrameNum() >= loops) {
+//		//ofSaveScreen(imgFileName+"_"+ofToString(mode)+".png");
+//		img.saveImage(ofToDataPath("mod.png"));
+//		saved = true;
+//		ofLogVerbose() << "DONE" << ofGetFrameNum();
+//	}
+}
+
+//--------------------------------------------------------------
+void ofxAsdfPixelSort::draw(){
 	img.draw(0,0);
-	if(!saved && ofGetFrameNum() >= loops) {
-		//ofSaveScreen(imgFileName+"_"+ofToString(mode)+".png");
-		img.saveImage(ofToDataPath("mod.png"));
-		saved = true;
-		ofLogVerbose() << "DONE" << ofGetFrameNum();
-	}
 }
 
 void ofxAsdfPixelSort::sortRow(){
