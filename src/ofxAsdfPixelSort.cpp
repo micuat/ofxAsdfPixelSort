@@ -30,7 +30,7 @@ void ofxAsdfPixelSort::draw(){
 	img.draw(0,0);
 	if(!saved && ofGetFrameNum() >= loops) {
 		//ofSaveScreen(imgFileName+"_"+ofToString(mode)+".png");
-		ofSaveFrame();
+		img.saveImage(ofToDataPath("mod.png"));
 		saved = true;
 		ofLogVerbose() << "DONE" << ofGetFrameNum();
 	}
@@ -64,7 +64,7 @@ void ofxAsdfPixelSort::sortRow(){
         if (x < 0) break;
         
         int sortLength = xend-x;
-		if(sortLength < 1) break;
+		if(sortLength < 0) break;
 		vector<int> unsorted(sortLength);
 		vector<int> sorted(sortLength);
 		
@@ -110,7 +110,7 @@ void ofxAsdfPixelSort::sortColumn() {
 		if(y < 0) break;
 		
 		int sortLength = yend-y;
-		if(sortLength < 1) break;
+		if(sortLength < 0) break;
 		vector<int> unsorted(sortLength);
 		
 		for (int i=0; i<sortLength; i++) {
