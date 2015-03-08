@@ -11,6 +11,7 @@ class ofxAsdfPixelSort {
 public:
 	void setup(ofImage& _img,
 			   int _mode = 1,
+			   int _steps = 1,
 			   int _blackValue = -16000000,
 			   int _brightnessValue = 60,
 			   int _whiteValue = -13000000);
@@ -36,7 +37,7 @@ private:
 	
 	ofImage img;
 	
-    int loops;
+    int steps;
 	int blackValue;
     int brigthnessValue;
     int whiteValue;
